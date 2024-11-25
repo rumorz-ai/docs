@@ -1,6 +1,9 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Documentation",
+
+  "openapi":"api-reference/openapi.yaml",
+
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -32,38 +35,20 @@
     }
   ],
   "anchors": [
-
+    {
+      "name": "Endpoints",
+      "openapi": "/api-reference/openapi.yaml",
+      "url": "api-reference",
+      "icon": "square-terminal"
+    }
   ],
   "navigation": [
+
     {
       "group": "Get Started",
       "pages": [
-        "introduction"
-      ]
-    },
-    {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "introduction",
+        "examples"
       ]
     }
   ],

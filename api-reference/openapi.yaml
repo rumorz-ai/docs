@@ -1,0 +1,140 @@
+openapi: 3.0.0
+info:
+  title: Rumorz SDK
+  description: >-
+    # 🚀 What is Rumorz?
+
+
+    Rumorz tracks 100s of sources across the web to extract investments insights
+    and sentiment analytics. We index a large amount of web data in real-time
+    and use AI Agents to save you time reading, staying up to date, and
+    identifying trends and investment opportunities.
+
+
+    ## 🧠 How does it work?
+
+
+    AI Agents read and analyze web data 24/7 and ingest 100s of pages of text a
+    day into a knowledge graph, allowing social and semantic analysis at state
+    of the art performance.
+
+
+    ## 🔒 API Access
+
+
+    Sign up for an account on [Rumorz](https://rumorz.io) and generate an API
+    key
+  version: 1.0.0
+servers:
+  - url: http://{{url}}
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: http
+      scheme: apikey
+security:
+  - apikeyAuth: []
+tags:
+  - name: Graph
+  - name: Agent
+paths:
+  /get_entity_posts:
+    post:
+      tags:
+        - Graph
+      summary: get_entity_posts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                node_ids:
+                  - 7d8d81b3-0808-47ce-b459-a9fd5f74fd57
+                lookback: 1D
+                page: 1
+                limit: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /get_entity_timeseries:
+    post:
+      tags:
+        - Graph
+      summary: get_entity_timeseries
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                node_ids:
+                  - 7d8d81b3-0808-47ce-b459-a9fd5f74fd57
+                metrics:
+                  - price
+                  - sentiment
+                lookback: 3M
+                page: 1
+                limit: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /search_entities:
+    post:
+      tags:
+        - Graph
+      summary: search_entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Bitcoin
+                asset_class: crypto
+                entity_type: FinancialAsset
+                symbol_search: BTC
+                limit: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /get_ranking:
+    post:
+      tags:
+        - Graph
+      summary: get_ranking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                lookback: 1D
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /get_entity_summary:
+    post:
+      tags:
+        - Agent
+      summary: get_entity_summary
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                node_id: 7d8d81b3-0808-47ce-b459-a9fd5f74fd57
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
