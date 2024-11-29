@@ -1,0 +1,30 @@
+## FAQ
+
+#### How can I access Rumorz?
+Rumorz is currently available via API and through the [Agent demo](https://rumorz-agent.streamlit.app/)
+
+#### How do I get an API Key?
+Email othmane@rumorz.io with "Rumorz API KEY" in the subject line.
+
+#### How does Rumorz leverage AI and Large Language Models (LLMs)?
+We use LLMs for indexing data, generating summaries, and extracting various sentiment scores.
+
+#### What financial assets and entities does Rumorz track?
+Rumorz tracks financial assets (crypto only for now), organizations, companies
+and people on the web. For now we're only tracking the crypto ecosystem but we
+plan to add more asset classes in the future.
+
+#### How are the sentiment scores generated?
+Using a combination of LLMs and NLP techniques.
+
+#### Are AI updates using real-time data?
+Yes, any summary or update generated uses real-time data.
+
+#### Can I use the data for detecting investments or backtesting?
+Yes, the data can be used for backtesting and other analysis. Any change in methodology will be communicated to users
+in advance.
+
+#### How do I use the SDK Copilot?
+The Copilot uses litellm under the hood. Just set your provider's API key as an environment variable and instantiate a RumrozCopilot with your model name. Please refer to
+the [litellm docs](https://docs.litellm.ai/docs/) for more information on
+providers/model names and authentication.

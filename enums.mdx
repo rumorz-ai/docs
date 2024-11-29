@@ -1,0 +1,96 @@
+# Enums Documentation
+
+## Lookback
+
+Enum representing different lookback periods for retrieving data.
+
+```python
+class Lookback(Enum):
+    ONE_HOUR = "1H"
+    SIX_HOURS = "6H"
+    TWELVE_HOURS = "12H"
+    ONE_DAY = "1D"
+    ONE_WEEK = "7D"
+    ONE_MONTH = "30D"
+    THREE_MONTHS = "90D"
+    ONE_YEAR = "365D"
+```
+
+## EntityType
+
+Enum representing different types of entities.
+
+```python
+class EntityType(Enum):
+    FINANCIAL_ASSET = "financial_asset"
+    COMPANY = "company"
+    ORGANIZATION = "organization"
+    PERSON = "person"
+    PLACE = "place"
+```
+
+## AssetClass
+
+Enum representing different asset classes.
+
+```python
+class AssetClass(Enum):
+    CRYPTO = "crypto"
+    COMMODITIES = "commodities"
+```
+
+## EntityMetricTransform
+
+Enum representing different metric transformation methods.
+
+```python
+class EntityMetricTransform(Enum):
+    LAST = 'last'
+    AVERAGE = 'average'
+    TICKS = 'ticks'
+```
+
+## EntityMetrics
+
+Enum representing different entity metrics.
+
+```python
+class EntityMetrics(Enum):
+    MENTIONS = 'mentions'
+    SENTIMENT = 'sentiment'
+    EXCITEMENT = 'excitement'
+    OPTIMISM = 'optimism'
+    PESSIMISM = 'pessimism'
+    FEAR = 'fear'
+    UNCERTAINTY = 'uncertainty'
+    SURPRISE = 'surprise'
+```
+
+## FinancialAssetMetrics
+
+Enum representing different financial asset metrics.
+
+```python
+class FinancialAssetMetrics(Enum):
+    PRICE = 'price'
+```
+
+## SingleMetricTimeSeries
+
+Model representing a single metric time series.
+
+```python
+class SingleMetricTimeSeries(BaseModel):
+    metric: Union[EntityMetrics, FinancialAssetMetrics, str]
+    values: List[Tuple[str, float]]
+```
+
+## TimeSeriesResponse
+
+Model representing a time series response.
+
+```python
+class TimeSeriesResponse(BaseModel):
+    entity_id: str
+    time_series: List[SingleMetricTimeSeries]
+```

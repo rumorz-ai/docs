@@ -1,14 +1,11 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Documentation",
-
-  "openapi":"api-reference/openapi.yaml",
-
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
     "primary": "#061670",
     "light": "#6f85fc",
@@ -21,13 +18,9 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:othmane@rumorz.io"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
   "tabs": [
     {
       "name": "API Reference",
@@ -43,17 +36,19 @@
     }
   ],
   "navigation": [
-
     {
       "group": "Get Started",
       "pages": [
         "introduction",
-        "examples"
+        "examples",
+        "enums",
+        "Q&A"
       ]
     }
   ],
   "footerSocials": {
     "x": "https://x.com/rumorz_io",
-    "github": "https://github.com/rumorz-ai/rumorz"
+    "github": "https://github.com/rumorz-ai/rumorz",
+    "linkedin": "https://www.linkedin.com/company/rumorz-ai"
   }
 }

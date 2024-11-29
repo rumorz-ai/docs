@@ -31,7 +31,7 @@ bottom_5_crypto = ranking_df.head(5)
 # Get the latest posts for the bottom 5 cryptocurrencies
 entities_posts = {}
 for node_id in bottom_5_crypto['id']:
-    posts = rumorz.graph.get_entity_posts(node_ids=[node_id], lookback=Lookback.ONE_DAY.value, limit=1)
+    posts = rumorz.graph.get_feed(ids=[node_id], lookback=Lookback.ONE_DAY.value, limit=1)
     entities_posts[node_id] = posts
 
 # Get summary of the latest negative news for
