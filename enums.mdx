@@ -1,22 +1,4 @@
-# Enum Definitions
-
-## Lookback
-
-```python
-from enum import Enum
-
-class Lookback(Enum):
-    """
-    Enum representing different lookback periods for data metrics.
-    """
-    ONE_HOUR = "1H"
-    SIX_HOURS = "6H"
-    TWELVE_HOURS = "12H"
-    ONE_DAY = "1D"
-    ONE_WEEK = "7D"
-    ONE_MONTH = "30D"
-    THREE_MONTHS = "90D"
-```
+# Enums Documentation
 
 ## EntityType
 
@@ -24,9 +6,9 @@ class Lookback(Enum):
 from enum import Enum
 
 class EntityType(Enum):
-    """
+    '''
     Enum representing different types of entities in the Rumorz Graph.
-    """
+    '''
     FINANCIAL_ASSET = "financial_asset"
     COMPANY = "company"
     ORGANIZATION = "organization"
@@ -40,26 +22,29 @@ class EntityType(Enum):
 from enum import Enum
 
 class AssetClass(Enum):
-    """
+    '''
     Enum representing different classes of financial assets.
-    """
+    '''
     CRYPTO = "crypto"
     COMMODITIES = "commodities"
 ```
 
-## EntityMetricTransform
+## Lookback
 
 ```python
 from enum import Enum
 
-class EntityMetricTransform(Enum):
-    """
-    Enum representing different types of metric transformations.
-    """
-    LAST = 'last'
-    AVERAGE = 'average'
-    TICKS = 'ticks'
-    PRICE_SUMMARY = 'price_summary'
+class Lookback(Enum):
+    '''
+    Enum representing different lookback periods for data metrics.
+    '''
+    ONE_HOUR = "1H"
+    SIX_HOURS = "6H"
+    TWELVE_HOURS = "12H"
+    ONE_DAY = "1D"
+    ONE_WEEK = "7D"
+    ONE_MONTH = "30D"
+    THREE_MONTHS = "90D"
 ```
 
 ## EntityMetrics
@@ -68,9 +53,9 @@ class EntityMetricTransform(Enum):
 from enum import Enum
 
 class EntityMetrics(Enum):
-    """
-    Enum representing different entity metrics in the Rumorz Graph.
-    """
+    '''
+    Enum representing different metrics for evaluating entities.
+    '''
     MENTIONS = 'mentions'
     SENTIMENT = 'sentiment'
     EXCITEMENT = 'excitement'
@@ -87,9 +72,9 @@ class EntityMetrics(Enum):
 from enum import Enum
 
 class FinancialAssetMetrics(Enum):
-    """
-    Enum representing different financial asset metrics.
-    """
+    '''
+    Enum representing different metrics for evaluating financial assets.
+    '''
     PRICE = 'price'
 ```
 
@@ -99,9 +84,9 @@ class FinancialAssetMetrics(Enum):
 from enum import Enum
 
 class TimeSeriesResample(Enum):
-    """
+    '''
     Enum representing different resampling intervals for time series data.
-    """
+    '''
     ONE_MINUTE = '1T'
     FIVE_MINUTES = '5T'
     FIFTEEN_MINUTES = '15T'
@@ -116,9 +101,9 @@ class TimeSeriesResample(Enum):
 from enum import Enum
 
 class TimeHorizon(Enum):
-    """
-    Enum representing different time horizons.
-    """
+    '''
+    Enum representing different time horizons for data analysis.
+    '''
     SHORT = 'short'
     LONG = 'long'
 ```

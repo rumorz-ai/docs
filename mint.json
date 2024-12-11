@@ -40,12 +40,18 @@
       "group": "Get Started",
       "pages": [
         "introduction",
+        "setup",
         "examples",
         "enums",
         "Q&A"
       ]
     }
   ],
+  "api": {
+    "playground": {
+      "mode": "hide"
+    }
+  },
   "footerSocials": {
     "x": "https://x.com/rumorz_io",
     "github": "https://github.com/rumorz-ai/rumorz",

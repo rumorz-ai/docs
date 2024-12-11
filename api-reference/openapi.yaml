@@ -1,11 +1,18 @@
 
 openapi: 3.0.0
 info:
-  title: Rumorz API
-  description: API documentation for accessing Rumorz financial markets AI intelligence.
+  title: Rumorz SDK API
   version: 1.0.0
 servers:
-  - url: https://rumorz.azurewebsites.net
+  - url: https://rumorz.azurewebsites.net/v0
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: []
 paths:
   /graph/get_feed:
     post:
@@ -28,12 +35,21 @@ paths:
                   type: string
                   enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
                   description: Time period to look back
-                scores_filter:
-                  type: string
+                sentiment_gte:
+                  type: number
+                sentiment_lte:
+                  type: number
                 page:
                   type: integer
                 limit:
                   type: integer
+            example:
+              ids: [115176]
+              lookback: 7D
+              sentiment_gte: 0.5
+              sentiment_lte: 1.0
+              page: 1
+              limit: 10
       responses:
         '200':
           description: Success
@@ -50,7 +66,9 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                name_search:
+                  type: string
+                symbol_search:
                   type: string
                 asset_class:
                   type: string
@@ -58,10 +76,14 @@ paths:
                 entity_type:
                   type: string
                   enum: [financial_asset, company, organization, person, place]
-                symbol_search:
-                  type: string
                 limit:
                   type: integer
+            example:
+              name_search: "Bitcoin"
+              symbol_search: "BTC"
+              asset_class: "crypto"
+              entity_type: "financial_asset"
+              limit: 1
       responses:
         '200':
           description: Success
@@ -81,17 +103,25 @@ paths:
                 lookback:
                   type: string
                   enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
+                entity_type:
+                  type: string
+                  enum: [financial_asset, company, organization, person, place]
+                sort_by:
+                  type: string
+                  enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise]
+                ascending:
+                  type: boolean
                 page:
                   type: integer
                 limit:
                   type: integer
-                sort_by:
-                  type: string
-                entity_type:
-                  type: string
-                  enum: [financial_asset, company, organization, person, place]
-                ascending:
-                  type: boolean
+            example:
+              lookback: 1D
+              entity_type: "financial_asset"
+              sort_by: "mentions"
+              ascending: false
+              page: 1
+              limit: 10
       responses:
         '200':
           description: Success
@@ -108,12 +138,10 @@ paths:
             schema:
               type: object
               properties:
-                as_df:
-                  type: boolean
                 ids:
                   type: array
                   items:
-                    type: integer
+                    type: string
                 metrics:
                   type: array
                   items:
@@ -126,6 +154,12 @@ paths:
                   type: integer
                 limit:
                   type: integer
+            example:
+              ids: [115176]
+              metrics: ["sentiment"]
+              lookback: 1D
+              page: 1
+              limit: 100
       responses:
         '200':
           description: Success
@@ -143,29 +177,9 @@ paths:
               type: object
               properties:
                 id:
-                  type: integer
-      responses:
-        '200':
-          description: Success
-  /agent/create_agent:
-    post:
-      tags:
-        - Agent
-      summary: create_agent
-      description: Create an agent with a goal, name and personality.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                goal:
                   type: string
-                name:
-                  type: string
-                personality:
-                  type: string
+            example:
+              id: 115176
       responses:
         '200':
           description: Success
@@ -183,77 +197,19 @@ paths:
               type: object
               properties:
                 id:
-                  type: integer
+                  type: string
                 timestamp:
                   type: string
-                scores_filter:
-                  type: string
+                  format: date-time
+                sentiment_gte:
+                  type: number
+                sentiment_lte:
+                  type: number
+            example:
+              id: 115176
+              timestamp: "2023-10-01T00:00:00Z"
+              sentiment_gte: 0.5
+              sentiment_lte: 1.0
       responses:
         '200':
           description: Success
-  /agent/get_state:
-    post:
-      tags:
-        - Agent
-      summary: get_state
-      description: Get the state of an agent including current sentiment, personality, and trading strategy.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-      responses:
-        '200':
-          description: Success
-  /agent/get_logs:
-    post:
-      tags:
-        - Agent
-      summary: get_logs
-      description: Get logs of the specified agent.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                lookback:
-                  type: string
-                limit:
-                  type: integer
-      responses:
-        '200':
-          description: Success
-components:
-  schemas:
-    Lookback:
-      type: string
-      enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
-    EntityType:
-      type: string
-      enum: [financial_asset, company, organization, person, place]
-    AssetClass:
-      type: string
-      enum: [crypto, commodities]
-    EntityMetricTransform:
-      type: string
-      enum: [last, average, ticks, price_summary]
-    EntityMetrics:
-      type: string
-      enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise]
-    FinancialAssetMetrics:
-      type: string
-      enum: [price]
-    TimeSeriesResample:
-      type: string
-      enum: [1T, 5T, 15T, 30T, 1H, 1D]
-    TimeHorizon:
-      type: string
-      enum: [short, long]
