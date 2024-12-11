@@ -2,7 +2,8 @@
 openapi: 3.0.0
 info:
   title: Rumorz API
-  version: v0
+  description: API documentation for accessing Rumorz financial markets AI intelligence.
+  version: 1.0.0
 servers:
   - url: https://rumorz.azurewebsites.net
 paths:
@@ -10,7 +11,7 @@ paths:
     post:
       tags:
         - Graph
-      summary: Get Feed
+      summary: get_feed
       description: Get the feed of posts related to the specified entities and filters.
       requestBody:
         required: true
@@ -36,12 +37,11 @@ paths:
       responses:
         '200':
           description: Success
-
   /graph/search_entities:
     post:
       tags:
         - Graph
-      summary: Search Entities
+      summary: search_entities
       description: Search for entities in the Rumorz Graph by name and/or symbol.
       requestBody:
         required: true
@@ -65,12 +65,11 @@ paths:
       responses:
         '200':
           description: Success
-
   /graph/get_ranking:
     post:
       tags:
         - Graph
-      summary: Get Ranking
+      summary: get_ranking
       description: Returns a ranking of every single entity in the Graph based on the given parameters.
       requestBody:
         required: true
@@ -88,7 +87,6 @@ paths:
                   type: integer
                 sort_by:
                   type: string
-                  enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise]
                 entity_type:
                   type: string
                   enum: [financial_asset, company, organization, person, place]
@@ -97,12 +95,11 @@ paths:
       responses:
         '200':
           description: Success
-
   /graph/get_metrics:
     post:
       tags:
         - Graph
-      summary: Get Metrics
+      summary: get_metrics
       description: Get metrics for an entity in the Rumorz Graph.
       requestBody:
         required: true
@@ -111,18 +108,17 @@ paths:
             schema:
               type: object
               properties:
-                operation:
-                  type: string
-                  enum: [last, average, ticks, price_summary]
+                as_df:
+                  type: boolean
                 ids:
                   type: array
                   items:
-                    type: string
+                    type: integer
                 metrics:
                   type: array
                   items:
                     type: string
-                    enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise, price]
+                  enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise, price]
                 lookback:
                   type: string
                   enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
@@ -133,12 +129,11 @@ paths:
       responses:
         '200':
           description: Success
-
   /graph/get_price_stats:
     post:
       tags:
         - Graph
-      summary: Get Price Stats
+      summary: get_price_stats
       description: Get summary price stats of a financial asset entity in the Rumorz Graph.
       requestBody:
         required: true
@@ -148,17 +143,16 @@ paths:
               type: object
               properties:
                 id:
-                  type: string
+                  type: integer
       responses:
         '200':
           description: Success
-
   /agent/create_agent:
     post:
       tags:
         - Agent
-      summary: Create Agent
-      description: Create an agent with a goal, name, and personality.
+      summary: create_agent
+      description: Create an agent with a goal, name and personality.
       requestBody:
         required: true
         content:
@@ -175,12 +169,11 @@ paths:
       responses:
         '200':
           description: Success
-
   /agent/summarize:
     post:
       tags:
         - Agent
-      summary: Summarize
+      summary: summarize
       description: Summarize events and news for any entity in the graph.
       requestBody:
         required: true
@@ -190,7 +183,7 @@ paths:
               type: object
               properties:
                 id:
-                  type: string
+                  type: integer
                 timestamp:
                   type: string
                 scores_filter:
@@ -198,13 +191,12 @@ paths:
       responses:
         '200':
           description: Success
-
   /agent/get_state:
     post:
       tags:
         - Agent
-      summary: Get State
-      description: Get the state of an agent. This includes current sentiment, personality, trading strategy, and more.
+      summary: get_state
+      description: Get the state of an agent including current sentiment, personality, and trading strategy.
       requestBody:
         required: true
         content:
@@ -213,17 +205,16 @@ paths:
               type: object
               properties:
                 id:
-                  type: string
+                  type: integer
       responses:
         '200':
           description: Success
-
   /agent/get_logs:
     post:
       tags:
         - Agent
-      summary: Get Logs
-      description: Get logs of an agent's activity.
+      summary: get_logs
+      description: Get logs of the specified agent.
       requestBody:
         required: true
         content:
@@ -235,13 +226,11 @@ paths:
                   type: string
                 lookback:
                   type: string
-                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
                 limit:
                   type: integer
       responses:
         '200':
           description: Success
-
 components:
   schemas:
     Lookback:
