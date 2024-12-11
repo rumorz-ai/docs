@@ -1,10 +1,14 @@
 ## FAQ
 
+#### Why is every API endpoint a POST request?
+This is simply for simplicity and speed of development. The v0 API follows an RPC model rather than REST. It's
+best to think of each POST request as a lambda/function call where you send the function name and arguments.
+
 #### How can I access Rumorz?
-Rumorz is currently available via API and through the [Agent demo](https://rumorz-agent.streamlit.app/)
+Rumorz is currently available via API only. Agents will be available soon.
 
 #### How do I get an API Key?
-Email othmane@rumorz.io with "Rumorz API KEY" in the subject line.
+Signup at https://rumorz.io and create a key.
 
 #### How does Rumorz leverage AI and Large Language Models (LLMs)?
 We use LLMs for indexing data, generating summaries, and extracting various sentiment scores.
