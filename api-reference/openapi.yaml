@@ -1,8 +1,9 @@
 
 openapi: 3.0.0
 info:
-  title: Rumorz SDK API
-  version: 1.0.0
+  title: Rumorz API
+  version: v0
+  description: This is the Rumorz API for accessing Financial markets AI intelligence through the Graph and Agent endpoints.
 servers:
   - url: https://rumorz.azurewebsites.net/v0
 components:
@@ -30,7 +31,7 @@ paths:
                 ids:
                   type: array
                   items:
-                    type: string
+                    type: integer
                 lookback:
                   type: string
                   enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
@@ -92,7 +93,7 @@ paths:
       tags:
         - Graph
       summary: get_ranking
-      description: Returns a ranking of every single entity in the Graph based on the given parameters.
+      description: Returns a ranking of entities in the Graph based on the given parameters.
       requestBody:
         required: true
         content:
@@ -117,8 +118,8 @@ paths:
                   type: integer
             example:
               lookback: 1D
-              entity_type: "financial_asset"
-              sort_by: "mentions"
+              entity_type: financial_asset
+              sort_by: mentions
               ascending: false
               page: 1
               limit: 10
@@ -130,7 +131,7 @@ paths:
       tags:
         - Graph
       summary: get_metrics
-      description: Get metrics for an entity in the Rumorz Graph.
+      description: Get a time series of sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise for an entity in the Rumorz Graph.
       requestBody:
         required: true
         content:
@@ -141,12 +142,7 @@ paths:
                 ids:
                   type: array
                   items:
-                    type: string
-                metrics:
-                  type: array
-                  items:
-                    type: string
-                  enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise, price]
+                    type: integer
                 lookback:
                   type: string
                   enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
@@ -156,30 +152,10 @@ paths:
                   type: integer
             example:
               ids: [115176]
-              metrics: ["sentiment"]
+              metrics: [sentiment]
               lookback: 1D
               page: 1
               limit: 100
-      responses:
-        '200':
-          description: Success
-  /graph/get_price_stats:
-    post:
-      tags:
-        - Graph
-      summary: get_price_stats
-      description: Get summary price stats of a financial asset entity in the Rumorz Graph.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-            example:
-              id: 115176
       responses:
         '200':
           description: Success
@@ -188,7 +164,7 @@ paths:
       tags:
         - Agent
       summary: summarize
-      description: Summarize events and news for any entity in the graph.
+      description: Summarize real-time or historical events and news for any entity in the graph.
       requestBody:
         required: true
         content:
@@ -197,7 +173,7 @@ paths:
               type: object
               properties:
                 id:
-                  type: string
+                  type: integer
                 timestamp:
                   type: string
                   format: date-time
@@ -207,7 +183,7 @@ paths:
                   type: number
             example:
               id: 115176
-              timestamp: "2023-10-01T00:00:00Z"
+              timestamp: "2023-10-26T00:00:00Z"
               sentiment_gte: 0.5
               sentiment_lte: 1.0
       responses:
