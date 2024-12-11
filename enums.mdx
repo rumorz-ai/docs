@@ -1,8 +1,8 @@
-# Enums Documentation
+# Enum Definitions
 
-## Lookback Enum
+## Lookback
 
-python
+```python
 from enum import Enum
 
 class Lookback(Enum):
@@ -16,11 +16,11 @@ class Lookback(Enum):
     ONE_WEEK = "7D"
     ONE_MONTH = "30D"
     THREE_MONTHS = "90D"
+```
 
+## EntityType
 
-## EntityType Enum
-
-python
+```python
 from enum import Enum
 
 class EntityType(Enum):
@@ -32,44 +32,44 @@ class EntityType(Enum):
     ORGANIZATION = "organization"
     PERSON = "person"
     PLACE = "place"
+```
 
+## AssetClass
 
-## AssetClass Enum
-
-python
+```python
 from enum import Enum
 
 class AssetClass(Enum):
     """
-    Enum representing different asset classes.
+    Enum representing different classes of financial assets.
     """
     CRYPTO = "crypto"
     COMMODITIES = "commodities"
+```
 
+## EntityMetricTransform
 
-## EntityMetricTransform Enum
-
-python
+```python
 from enum import Enum
 
 class EntityMetricTransform(Enum):
     """
-    Enum representing different transformations for entity metrics.
+    Enum representing different types of metric transformations.
     """
     LAST = 'last'
     AVERAGE = 'average'
     TICKS = 'ticks'
     PRICE_SUMMARY = 'price_summary'
+```
 
+## EntityMetrics
 
-## EntityMetrics Enum
-
-python
+```python
 from enum import Enum
 
 class EntityMetrics(Enum):
     """
-    Enum representing different metrics for entities.
+    Enum representing different entity metrics in the Rumorz Graph.
     """
     MENTIONS = 'mentions'
     SENTIMENT = 'sentiment'
@@ -79,23 +79,23 @@ class EntityMetrics(Enum):
     FEAR = 'fear'
     UNCERTAINTY = 'uncertainty'
     SURPRISE = 'surprise'
+```
 
+## FinancialAssetMetrics
 
-## FinancialAssetMetrics Enum
-
-python
+```python
 from enum import Enum
 
 class FinancialAssetMetrics(Enum):
     """
-    Enum representing different metrics for financial assets.
+    Enum representing different financial asset metrics.
     """
     PRICE = 'price'
+```
 
+## TimeSeriesResample
 
-## TimeSeriesResample Enum
-
-python
+```python
 from enum import Enum
 
 class TimeSeriesResample(Enum):
@@ -108,17 +108,17 @@ class TimeSeriesResample(Enum):
     THIRTY_MINUTES = '30T'
     ONE_HOUR = '1H'
     ONE_DAY = '1D'
+```
 
+## TimeHorizon
 
-## TimeHorizon Enum
-
-python
+```python
 from enum import Enum
 
 class TimeHorizon(Enum):
     """
-    Enum representing different investment time horizons.
+    Enum representing different time horizons.
     """
     SHORT = 'short'
     LONG = 'long'
-
+```
