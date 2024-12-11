@@ -4,7 +4,7 @@ info:
   title: Rumorz API
   version: v0
 servers:
-  - url: http://rumorz-api.eastus2.azurecontainer.io
+  - url: https://rumorz.azurewebsites.net
 paths:
   /graph/get_feed:
     post:
