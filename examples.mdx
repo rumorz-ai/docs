@@ -4,48 +4,39 @@ description: 'Example usage of the SDK'
 ---
 
 ```python
-import datetime as dt
 import os
-
-import pandas as pd
-
+from datetime import datetime
 from rumorz.client import RumorzClient
-from rumorz.enums import Lookback, EntityType, AssetClass, EntityMetrics
+from rumorz.enums import Lookback, EntityType, EntityMetrics
 
-# Initialize Rumorz Client
-rumorz = RumorzClient(api_key=os.environ['RUMORZ_API_KEY'])
-ranking = rumorz.graph.get_ranking(
-    lookback=Lookback.ONE_DAY.value,  # Look back at the last day
-    entity_type=EntityType.FINANCIAL_ASSET.value,
-    asset_class=AssetClass.CRYPTO.value,
-    metrics=[EntityMetrics.SENTIMENT.value]
+
+# Initialize the RumorzClient
+rumorz_client = RumorzClient(api_key=os.environ['RUMORZ_API_KEY'])
+
+# Step 1: Get the entity rankings for people based on sentiment over the past 7 days.
+rankings = rumorz_client.graph.get_ranking(
+    lookback=Lookback.ONE_WEEK.value,
+    entity_type=EntityType.PERSON.value,
+    sort_by=EntityMetrics.SENTIMENT.value,
+    scores_filter='mentions > 10',
+    limit=10,
+    ascending=False
 )
+print("Entity rankings (top 10 people by sentiment in the last 7 days):", rankings)
 
-# Create a DataFrame from the ranking and sort by sentiment in ascending order
-ranking_df = pd.DataFrame(ranking)
-ranking_df.sort_values(by=EntityMetrics.SENTIMENT.value, ascending=True, inplace=True)
+# Step 2: Identify the top 2 with the most positive sentiment and top 2 with the most negative sentiment
+sorted_rankings = sorted(rankings, key=lambda x: x['sentiment'], reverse=True)
+top_positive = sorted_rankings[:2]
+top_negative = sorted_rankings[-2:]
 
-# Get the bottom 5 cryptocurrencies by negative sentiment
-bottom_5_crypto = ranking_df.head(5)
-
-# Get the latest posts for the bottom 5 cryptocurrencies
-entities_posts = {}
-for node_id in bottom_5_crypto['id']:
-    posts = rumorz.graph.get_feed(ids=[node_id], lookback=Lookback.ONE_DAY.value, limit=1)
-    entities_posts[node_id] = posts
-
-# Get summary of the latest negative news for
-summaries = {}
-for node_id, posts in entities_posts.items():
-    if len(posts) > 0:
-        summary = rumorz.agent.get_entity_summary(
-            node_id=node_id,
-            timestamp=dt.datetime.utcnow().isoformat()
-        )
-        summaries[node_id] = summary
-
-# Print the summaries
-for node_id, summary in summaries.items():
-    print(f"Summary for {node_id}: {summary}")
+# Step 3: Fetch summaries for these identified entities
+all_summaries = {}
+for entity in top_positive + top_negative:
+    summary = rumorz_client.agent.summarize(
+        id=entity['id'],
+        timestamp=datetime.utcnow().isoformat()
+    )
+    all_summaries[entity['name']] = summary
+    print(f"Summary for {entity['name']}:", summary)
 
 ```

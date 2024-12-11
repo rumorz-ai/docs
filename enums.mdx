@@ -1,10 +1,11 @@
-# Enums Documentation
+mdx
+# Enumerations
 
 ## Lookback
 
-Enum representing different lookback periods for retrieving data.
+This enum represents different time frames for lookback periods.
 
-```python
+python
 class Lookback(Enum):
     ONE_HOUR = "1H"
     SIX_HOURS = "6H"
@@ -13,48 +14,48 @@ class Lookback(Enum):
     ONE_WEEK = "7D"
     ONE_MONTH = "30D"
     THREE_MONTHS = "90D"
-    ONE_YEAR = "365D"
-```
+
 
 ## EntityType
 
-Enum representing different types of entities.
+This enum represents the types of entities in the Rumorz Graph.
 
-```python
+python
 class EntityType(Enum):
     FINANCIAL_ASSET = "financial_asset"
     COMPANY = "company"
     ORGANIZATION = "organization"
     PERSON = "person"
     PLACE = "place"
-```
+
 
 ## AssetClass
 
-Enum representing different asset classes.
+This enum represents the asset classes.
 
-```python
+python
 class AssetClass(Enum):
     CRYPTO = "crypto"
     COMMODITIES = "commodities"
-```
+
 
 ## EntityMetricTransform
 
-Enum representing different metric transformation methods.
+This enum represents the different transformations that can be applied to entity metrics.
 
-```python
+python
 class EntityMetricTransform(Enum):
     LAST = 'last'
     AVERAGE = 'average'
     TICKS = 'ticks'
-```
+    PRICE_SUMMARY = 'price_summary'
+
 
 ## EntityMetrics
 
-Enum representing different entity metrics.
+This enum represents the different metrics that can be associated with an entity.
 
-```python
+python
 class EntityMetrics(Enum):
     MENTIONS = 'mentions'
     SENTIMENT = 'sentiment'
@@ -64,33 +65,38 @@ class EntityMetrics(Enum):
     FEAR = 'fear'
     UNCERTAINTY = 'uncertainty'
     SURPRISE = 'surprise'
-```
+
 
 ## FinancialAssetMetrics
 
-Enum representing different financial asset metrics.
+This enum represents the metrics that can be associated with financial assets.
 
-```python
+python
 class FinancialAssetMetrics(Enum):
     PRICE = 'price'
-```
 
-## SingleMetricTimeSeries
 
-Model representing a single metric time series.
+## TimeSeriesResample
 
-```python
-class SingleMetricTimeSeries(BaseModel):
-    metric: Union[EntityMetrics, FinancialAssetMetrics, str]
-    values: List[Tuple[str, float]]
-```
+This enum represents the different intervals for resampling timeseries data.
 
-## TimeSeriesResponse
+python
+class TimeSeriesResample(Enum):
+    ONE_MINUTE = '1T'
+    FIVE_MINUTES = '5T'
+    FIFTEEN_MINUTES = '15T'
+    THIRTY_MINUTES = '30T'
+    ONE_HOUR = '1H'
+    ONE_DAY = '1D'
 
-Model representing a time series response.
 
-```python
-class TimeSeriesResponse(BaseModel):
-    entity_id: str
-    time_series: List[SingleMetricTimeSeries]
-```
+## TimeHorizon
+
+This enum represents the time horizon for analysis.
+
+python
+class TimeHorizon(Enum):
+    SHORT = 'short'
+    LONG = 'long'
+
+

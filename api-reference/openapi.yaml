@@ -2,7 +2,7 @@
 openapi: 3.0.0
 info:
   title: Rumorz API
-  version: 1.0.0
+  version: v0
 servers:
   - url: http://rumorz-api.eastus2.azurecontainer.io
 paths:
@@ -10,7 +10,7 @@ paths:
     post:
       tags:
         - Graph
-      summary: get_feed
+      summary: Get Feed
       description: Get the feed of posts related to the specified entities and filters.
       requestBody:
         required: true
@@ -25,7 +25,7 @@ paths:
                     type: string
                 lookback:
                   type: string
-                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D, 365D]
+                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
                   description: Time period to look back
                 scores_filter:
                   type: string
@@ -36,11 +36,12 @@ paths:
       responses:
         '200':
           description: Success
+
   /graph/search_entities:
     post:
       tags:
         - Graph
-      summary: search_entities
+      summary: Search Entities
       description: Search for entities in the Rumorz Graph by name and/or symbol.
       requestBody:
         required: true
@@ -64,11 +65,12 @@ paths:
       responses:
         '200':
           description: Success
+
   /graph/get_ranking:
     post:
       tags:
         - Graph
-      summary: get_ranking
+      summary: Get Ranking
       description: Returns a ranking of every single entity in the Graph based on the given parameters.
       requestBody:
         required: true
@@ -79,8 +81,7 @@ paths:
               properties:
                 lookback:
                   type: string
-                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D, 365D]
-                  description: Time period to look back
+                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
                 page:
                   type: integer
                 limit:
@@ -91,18 +92,17 @@ paths:
                 entity_type:
                   type: string
                   enum: [financial_asset, company, organization, person, place]
-                scores_filter:
-                  type: string
                 ascending:
                   type: boolean
       responses:
         '200':
           description: Success
+
   /graph/get_metrics:
     post:
       tags:
         - Graph
-      summary: get_metrics
+      summary: Get Metrics
       description: Get metrics for an entity in the Rumorz Graph.
       requestBody:
         required: true
@@ -111,11 +111,9 @@ paths:
             schema:
               type: object
               properties:
-                as_df:
-                  type: boolean
                 operation:
                   type: string
-                  enum: [last, average, ticks]
+                  enum: [last, average, ticks, price_summary]
                 ids:
                   type: array
                   items:
@@ -124,10 +122,10 @@ paths:
                   type: array
                   items:
                     type: string
-                  enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise, price]
+                    enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise, price]
                 lookback:
                   type: string
-                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D, 365D]
+                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
                 page:
                   type: integer
                 limit:
@@ -135,12 +133,32 @@ paths:
       responses:
         '200':
           description: Success
+
+  /graph/get_price_stats:
+    post:
+      tags:
+        - Graph
+      summary: Get Price Stats
+      description: Get summary price stats of a financial asset entity in the Rumorz Graph.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+      responses:
+        '200':
+          description: Success
+
   /agent/create_agent:
     post:
       tags:
         - Agent
-      summary: create_agent
-      description: Create an agent with a goal, name and personality.
+      summary: Create Agent
+      description: Create an agent with a goal, name, and personality.
       requestBody:
         required: true
         content:
@@ -157,11 +175,12 @@ paths:
       responses:
         '200':
           description: Success
+
   /agent/summarize:
     post:
       tags:
         - Agent
-      summary: summarize
+      summary: Summarize
       description: Summarize events and news for any entity in the graph.
       requestBody:
         required: true
@@ -174,17 +193,17 @@ paths:
                   type: string
                 timestamp:
                   type: string
-                  format: date-time
                 scores_filter:
                   type: string
       responses:
         '200':
           description: Success
+
   /agent/get_state:
     post:
       tags:
         - Agent
-      summary: get_state
+      summary: Get State
       description: Get the state of an agent. This includes current sentiment, personality, trading strategy, and more.
       requestBody:
         required: true
@@ -198,12 +217,13 @@ paths:
       responses:
         '200':
           description: Success
+
   /agent/get_logs:
     post:
       tags:
         - Agent
-      summary: get_logs
-      description: Get logs of an agent.
+      summary: Get Logs
+      description: Get logs of an agent's activity.
       requestBody:
         required: true
         content:
@@ -215,17 +235,18 @@ paths:
                   type: string
                 lookback:
                   type: string
-                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D, 365D]
+                  enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
                 limit:
                   type: integer
       responses:
         '200':
           description: Success
+
 components:
   schemas:
     Lookback:
       type: string
-      enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D, 365D]
+      enum: [1H, 6H, 12H, 1D, 7D, 30D, 90D]
     EntityType:
       type: string
       enum: [financial_asset, company, organization, person, place]
@@ -234,10 +255,16 @@ components:
       enum: [crypto, commodities]
     EntityMetricTransform:
       type: string
-      enum: [last, average, ticks]
+      enum: [last, average, ticks, price_summary]
     EntityMetrics:
       type: string
       enum: [mentions, sentiment, excitement, optimism, pessimism, fear, uncertainty, surprise]
     FinancialAssetMetrics:
       type: string
       enum: [price]
+    TimeSeriesResample:
+      type: string
+      enum: [1T, 5T, 15T, 30T, 1H, 1D]
+    TimeHorizon:
+      type: string
+      enum: [short, long]
